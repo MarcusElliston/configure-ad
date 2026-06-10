@@ -46,7 +46,7 @@ Log into the Azure Portal and create a new Resource Group. Inside it, create two
 
 ### Step 2: Ensure Connectivity Between Client and Domain Controller
 
-![Screenshot - Command prompt on Client-1 showing a successful ping to DC-1's private IP](SCREENSHOT_2_ping_test.png)
+<img width="1664" height="986" alt="1000030318" src="https://github.com/user-attachments/assets/c893454a-34ef-471b-9587-952641723bd1" />
 
 Log into `Client-1` via Remote Desktop and open Command Prompt. Attempt to ping DC-1's private IP address (e.g. `ping 10.0.0.4`). If the ping times out, log into `DC-1` and enable **ICMPv4** through the Windows Firewall by opening **Windows Defender Firewall with Advanced Security > Inbound Rules** and enabling the Core Networking Diagnostics (ICMPv4) rules. Return to Client-1 and confirm the ping now succeeds.
 
@@ -54,7 +54,7 @@ Log into `Client-1` via Remote Desktop and open Command Prompt. Attempt to ping 
 
 ### Step 3: Install Active Directory Domain Services
 
-![Screenshot - Server Manager on DC-1 showing AD DS installed and the domain promotion wizard](SCREENSHOT_3_ad_install.png)
+<img width="1645" height="980" alt="1000030307" src="https://github.com/user-attachments/assets/44bbe348-4896-4f03-b1c8-dbb927767a5d" />
 
 Log into `DC-1` and open **Server Manager**. Click **Add Roles and Features** and install **Active Directory Domain Services**. Once installed, click the notification flag in Server Manager and select **Promote this server to a domain controller**. Choose **Add a new forest** and set a domain name (e.g. `mydomain.com`). Set a Directory Services Restore Mode password, complete the wizard, and let the server restart. Log back in as `mydomain.com\labuser` (or whatever admin account you created).
 
@@ -62,7 +62,7 @@ Log into `DC-1` and open **Server Manager**. Click **Add Roles and Features** an
 
 ### Step 4: Create Admin and User Accounts in Active Directory
 
-![Screenshot - Active Directory Users and Computers showing OUs and new user accounts created](SCREENSHOT_4_ad_users.png)
+<img width="1785" height="1042" alt="1000030309" src="https://github.com/user-attachments/assets/709ae1ef-b066-485b-a862-5e534ba2647d" />
 
 On `DC-1`, open **Active Directory Users and Computers (ADUC)**. Create two Organizational Units (OUs): `_EMPLOYEES` and `_ADMINS`. Inside `_ADMINS`, create a new user (e.g. Jane Doe, username: `jane_admin`) and add her to the **Domain Admins** security group. Log out of DC-1 and log back in as `mydomain.com\jane_admin` — use this account going forward instead of the default admin account.
 
@@ -70,7 +70,7 @@ On `DC-1`, open **Active Directory Users and Computers (ADUC)**. Create two Orga
 
 ### Step 5: Join Client-1 to the Domain
 
-![Screenshot - Client-1 System Properties showing it has been successfully joined to mydomain.com](SCREENSHOT_5_join_domain.png)
+<img width="1655" height="1004" alt="1000030313" src="https://github.com/user-attachments/assets/a251775c-6440-49af-be3d-771ebc5b2b98" />
 
 Log into the Azure Portal and update `Client-1`'s DNS settings to point to **DC-1's private IP address** (under Networking > DNS Servers). Restart Client-1. Then log into Client-1, go to **System > Rename this PC (Advanced) > Change**, select **Domain**, and enter `mydomain.com`. Enter the admin credentials when prompted (e.g. `mydomain.com\jane_admin`). The machine will restart and is now joined to the domain. Verify in ADUC on DC-1 that Client-1 appears under the **Computers** container.
 
@@ -78,7 +78,7 @@ Log into the Azure Portal and update `Client-1`'s DNS settings to point to **DC-
 
 ### Step 6: Set Up Remote Desktop for Non-Admin Users
 
-![Screenshot - Remote Desktop Users settings on Client-1 showing "Domain Users" added](SCREENSHOT_6_rdp_users.png)
+<img width="1634" height="995" alt="1000030322" src="https://github.com/user-attachments/assets/29ca723e-fa56-4aa6-8b10-74c9b4a6583c" />
 
 Log into `Client-1` as `mydomain.com\jane_admin`. Open **System Properties > Remote Desktop** and click **Select users that can remotely access this PC**. Add **Domain Users** to allow all standard domain users to log into Client-1 via Remote Desktop. In a real environment this would typically be done with Group Policy, but this manual method works for lab purposes.
 
@@ -86,6 +86,6 @@ Log into `Client-1` as `mydomain.com\jane_admin`. Open **System Properties > Rem
 
 ### Step 7: Create Additional Users with PowerShell and Test Login
 
-![Screenshot - PowerShell ISE running the user creation script, and a successful login to Client-1 as one of the new users](SCREENSHOT_7_powershell_users.png)
+<img width="1647" height="995" alt="1000030324" src="https://github.com/user-attachments/assets/912de0e8-a755-4127-be07-b1d92070517a" />
 
 Log into `DC-1` as `jane_admin` and open **PowerShell ISE as Administrator**. Run a script to bulk-create user accounts in the `_EMPLOYEES` OU (your instructor will provide this script, or you can write one that creates users with a default password). Once the script completes, open ADUC and confirm the accounts appear in `_EMPLOYEES`. Then attempt to log into `Client-1` using one of the newly created domain user accounts to verify everything is working end-to-end.
