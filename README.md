@@ -38,7 +38,7 @@ This tutorial outlines the implementation of on-premises Active Directory within
 
 ### Step 1: Create the Domain Controller and Client VMs in Azure
 
-![Screenshot - Azure portal showing both VMs created in the same VNet](SCREENSHOT_1_vms_azure.png)
+<img width="1527" height="704" alt="Gemini_Generated_Image_7xmp9h7xmp9h7xmp" src="https://github.com/user-attachments/assets/2186cf5c-2373-439d-ab81-560fa8ce25ac" />
 
 Log into the Azure Portal and create a new Resource Group. Inside it, create two Virtual Machines: one running **Windows Server 2022** (this will be your Domain Controller, name it `DC-1`) and one running **Windows 10** (this will be your client machine, name it `Client-1`). Make sure both VMs are on the **same virtual network and subnet**. After creation, set DC-1's private IP address to **static** so it doesn't change — go to the VM's Network Interface settings and set the IP allocation to Static.
 
